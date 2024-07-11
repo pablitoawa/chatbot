@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms'
 
 interface Message {
   text: string;
   isUser: boolean;
+  timestamp?: string;
 }
 
 @Component({
@@ -22,13 +23,37 @@ export class ChatBotComponent {
   newMessage: string = '';
   isDragging: boolean = false;
   selectedFile: File | null = null;
+  current = new Date();
+  
+  getTime() {
+    const time = this.current.getHours() + ":" + this.current.getMinutes() + ":" + this.current.getSeconds();
+    return time
+  }
 
   sendMessage() {
     if (this.newMessage.trim()) {
-      this.messages.push({ text: this.newMessage, isUser: true });
-      this.messages.push({ text: "Respuesta del chatbot sobre plantas de frijol", isUser: false });
+      const timestamp = this.getCurrentTimestamp();
+      this.messages.push({ 
+        text: this.newMessage, 
+        isUser: true, 
+        timestamp: timestamp 
+      });
+      this.messages.push({ 
+        text: "Respuesta del chatbot sobre plantas de frijol", 
+        isUser: false, 
+        timestamp: timestamp 
+      });
       this.newMessage = '';
     }
+  }
+
+  getCurrentTimestamp(): string {
+    const now = new Date();
+    return now.toLocaleTimeString('es-ES', { 
+      hour: '2-digit', 
+      minute: '2-digit',
+      second: '2-digit'
+    });
   }
 
   onFileSelected(event: any) {

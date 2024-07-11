@@ -117,3 +117,14 @@
 .selected-file i {
   margin-right: 5px;
 }
+
+.message-timestamp {
+  font-size: 0.75em;
+  color: #888;
+  margin-left: 10px;
+  float: right;
+}
+
+.user-message .message-timestamp {
+  color: #e0e0e0;
+}
